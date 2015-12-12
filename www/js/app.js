@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // '200d.services' is found in services.js
 // '200d.controllers' is found in controllers.js
-angular.module('200d', ['ionic', '200d.controllers', '200d.services'])
+angular.module('200d', ['ionic', '200d.controllers', '200d.services', 'ionic.contrib.ui.tinderCards'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -40,12 +40,17 @@ angular.module('200d', ['ionic', '200d.controllers', '200d.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.asistencia', {
+    url: '/asistencia',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
+      'tab-asistencia': {
+        templateUrl: 'templates/tab-asistencia.html',
+        controller: 'AsistenciaCtrl',
+        resolve: {
+          Students : function(StudentsService){
+            return StudentsService.all();
+          }
+        }
       }
     }
   })
@@ -80,6 +85,6 @@ angular.module('200d', ['ionic', '200d.controllers', '200d.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/asistencia');
 
 });

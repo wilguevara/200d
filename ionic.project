@@ -1,4 +1,12 @@
 {
   "name": "200D",
-  "app_id": ""
+  "app_id": "5c36ce78",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }

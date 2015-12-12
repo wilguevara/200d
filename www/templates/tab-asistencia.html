@@ -1,0 +1,83 @@
+<ion-view view-title="Asistencia de estudiantes">
+  <ion-content>
+
+    <a class="item item-thumbnail-left" href="#" style="background-color:transparent;">
+      <img src="img/escudo-iejms.png">
+      <h2><i class="icon ion-location"></i> Instituto España Jesus Milla Selva</h2>
+      <p>1º grado, Sección "A" 1:00pm</p>
+      <button class="button button-block button-energized" ng-click="openModal();">
+        <i class="icon ion-android-checkmark-circle"></i> Pasar asistencia
+      </button>
+    </a>
+    
+    <div class="bar item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Buscar alumno(a)" ng-model="searchText">
+      </label>
+      <button class="button button-clear">
+        Cancelar
+      </button>
+    </div>
+
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" 
+      ng-repeat="student in students | filter:searchText" 
+      type="item-text-wrap" href="#/tab/student/{{student.id}}">
+        <img ng-src="{{student.face}}">
+        <h2>{{student.name}}</h2>
+        <p>ID: {{student.idnumber}}</p>
+
+        <i class="icon ion-checkmark-round"></i>
+
+        <ion-option-button class="button-assertive" ng-click="uncheck(student)">
+          <i class="icon ion-close-round"></i>
+        </ion-option-button>
+        <ion-option-button class="button-balanced" ng-click="check(student)">
+          <i class="icon ion-checkmark-round"></i>
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
+
+<script id="tinder-modal.html" type="text/ng-template">
+  <ion-modal-view>
+
+    <ion-header-bar class="bar-energized" align-title="right">
+      <div class="buttons">
+        <button ng-click="closeModal();" style="color:white;" class="button button-clear button-light">
+          <i class="icon ion-ios-arrow-thin-left"></i> Volver
+        </button>
+      </div>
+      <h1 class="title"><strong>Tomar asistencia</strong></h1>
+    </ion-header-bar>
+
+    <ion-content style="background-image: url('img/asistance-bg.jpg');background-size: cover;background-position: center;-webkit-background-size:cover;">
+
+      <div class="card" ng-if="cards.length == 0" style="margin-top:100px;background-color:transparent;">
+        <div class="item item-text-wrap" style="text-align:center;background-color:rgba(255,255,255,0.6)">
+          <p><i class="icon ion-information-circled centered" style="font-size:4em;"></i></p>
+          <p>No hay mas alumnos pendientes por tomar asistencia a clase.</p>
+          <button class="button button-stable button-full" ng-click="closeModal()">Cerrar</button>
+        </div>
+      </div>
+
+      <td-cards>
+        <td-card id="td-card" ng-repeat="card in cards" on-destroy="cardDestroyed($index)"
+          on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)"
+          on-partial-swipe="cardPartialSwipe(amt)">
+            <div class="title">
+                {{card.name}} | {{card.idnumber}}
+            </div>
+            <div class="image">
+                <div class="no-text overlayBox"><div class="noBox boxed">No vino</div></div>
+                <img ng-src="{{card.face}}">
+                <div class="yes-text overlayBox"><div class="yesBox boxed" id="centerMe">Presente</div></div>
+            </div>
+        </td-card>
+    </td-cards>
+    </ion-content>
+  </ion-modal-view>
+</script>
