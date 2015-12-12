@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.codestorehn.200D" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.codestorehn.200d_maestros" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>200 :D</name>
   <description>
-        200 días de clase
+        200 días de clase Maestros
     </description>
   <author email="wilfredo@codestorehn.com" href="http://codestorehn.com/">
       Oscar Wilfredo Rodriguez Guevara
