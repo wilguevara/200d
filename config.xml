@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.codestorehn.doscientosdias" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>200 :D</name>
+  <name>200 =DC</name>
   <description>
-        200 días de clases
+        200 Días de Clases
     </description>
-  <author email="wilfredo@codestorehn.com" href="http://codestorehn.com/">
+  <author email="wilrodriguezguevara@gmail.com.com" href="http://codestorehn.com/">
       Oscar Wilfredo Rodriguez Guevara
     </author>
   <content src="index.html"/>

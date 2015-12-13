@@ -1,4 +1,10 @@
-angular.module('200d.services', [])
+angular.module('200d.services', ['ngResource'])
+
+/*.factory("Auth", ["$firebaseAuth", "$rootScope",
+ function ($firebaseAuth, $rootScope) {
+    var ref = new Firebase(firebaseUrl);
+    return $firebaseAuth(ref);
+}])*/
 
 .factory('InstitueService', function() {
   // Might use a resource here that returns a JSON array
@@ -93,51 +99,80 @@ angular.module('200d.services', [])
   };
 })
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.service('SMSservice', function($q, $resource, $ionicLoading, $log){
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
+  var smsRes = $resource( 'http://172.16.0.138:8000/sace/ws/send/sms/', {
+      to : '@number', 
+      body : '@myBody'
+    },
+    { 'sendSms' : { 
+    isArray : false,
+    method : 'GET',
+    /*data : {
+      to : '@number', 
+      body : '@myBody'
+    }*/
+    /*withCredentials : true,
+    headers : {
+      'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'
+    },
+    transformRequest : function(obj){
+        var str = [];
+        for(var p in obj)
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        return str.join("&");
+      }*/
+    }
+  });
 
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+  return{
+    sendSmsNotify : function(_to, _body){
+      var deferred = $q.defer();
+      var promise = deferred.promise;
+
+      $ionicLoading.show({
+        content: 'Loading',
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0
+      });
+
+      smsRes.sendSms({ 
+        to : _to, 
+        body : _body
+      },function(resp){
+        $ionicLoading.hide();
+        deferred.resolve(resp);
+      },
+      function(err){
+        $ionicLoading.hide();
+        $log.error( JSON.stringify(err) );
+        if( err.status === 400 ){
+          var validations = {
+            'message' : 'Porfavor corrija los errores en rojo.',
+            validate : err.data
+          };
+
+          deferred.reject(validations);
+        }else if( err.status === 401){
+          deferred.reject("Su sesión ha expirado.");
+        }else{
+          deferred.reject("Servidor inaccesible: (" + err.status + ")(" + err.statusText + ")");
         }
+      });
+
+      promise.success = function(fn){
+        promise.then(fn);
+        return promise;
       }
-      return null;
+      promise.error = function(fn){
+        promise.then(null, fn);
+        return promise;
+      }
+
+      return promise;
     }
   };
+
 });

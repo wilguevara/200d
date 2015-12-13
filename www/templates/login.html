@@ -1,0 +1,86 @@
+<ion-view view-title="Iniciar sesión" hide-nav-bar="true">
+  <ion-content class="login-content">
+    <div class="row">
+      <div class="col" style="text-align:center;min-height:180px;">
+        <img ng-src="{{ logo_source }}" style="max-width:200px;" ng-class="{'animated swing': playAnimation}"/>
+      </div>
+    </div>
+    <div class="row" style="padding:0;">
+      <div class="col" style="padding:0;">
+        <div class="list">
+          <label class="item item-input item-floating-label login-item-input">
+            <span class="input-label">Nombre de usuario o correo:</span>
+            <input type="text" ng-model="user.username">
+          </label>
+          <label class="item item-input item-floating-label login-item-input">
+            <span class="input-label">Clave:</span>
+            <input type="password" ng-model="user.password">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- login button -->
+    <div ng-show="(user.username.length > 0 && user.password.length > 0)" ng-class="{'animated fadeInUp' : (user.username.length > 0 && user.password.length > 0) }" class="padding">
+      <button class="button button-block button-stable icon-left ion-ios-checkmark-empty" ng-click="singIn(user)">
+        Ingresar
+      </button>
+      <!--p class="text-center">
+        <a class="button button-clear button-stable" href="#/forgotpassword" style="color:#333;">Olvide mi clave</a>
+      </p-->
+    </div>
+
+    <!-- facebook login button -->
+    <div class="padding">
+      <button style="background-color:#45619d;color:white;" class="button button-block button-white icon-left ion-social-facebook" ng-click="facebookSignIn()">
+        Ingresar con facebook
+      </button>
+      <a class="button button-clear button-block button-stable" style="color:#333;text-shadow:0 1px 0 #999;" ng-click="showSignupModal();">
+        o también puedes <strong>crear tu cuenta aquí</strong>
+      </a>
+    </div>
+  </ion-content>
+  
+  <!--div class="bar bar-footer" style="background-color:transparent;margin-bottom:13px;">
+    <h1 style="text-align:center;color:#fff;width:100%;">Me apunto</h1>
+  </div-->
+</ion-view>
+<script id="signup-modal.html" type="text/ng-template">
+  <div class="modal">
+    <ion-header-bar class="bar-positive" align-title="right">
+      <div class="buttons">
+        <button  ng-click="closeModal()" style="color:white;" class="button button-clear button-light">
+          <i class="icon ion-ios-arrow-thin-left"></i> Cancelar
+        </button>
+      </div>
+      <h1 class="title"><strong>Crear mi cuenta</strong></h1>
+      <div class="buttons">
+        <ion-spinner icon="ios" ng-if="sendingEmail"></ion-spinner>
+        <button ng-if="!sendingEmail" class="button button-clear" ng-click="resendEmailVerification();"><i class="icon ion-paper-airplane"></i></button>
+      </div>
+    </ion-header-bar>
+
+    <ion-content class="login-content">
+      <div class="list">
+        <label class="item item-input item-floating-label login-item-input">
+          <span class="input-label">Nombre de usuario:</span>
+          <input type="text" ng-model="register.username" ng-keyup="validate.username.is_valid = true">
+          <label style="color:red" ng-hide="validate.username.is_valid"><i class="icon ion-ios-information"></i> {{validate.username.message}}</label>
+        </label>
+        <label class="item item-input item-floating-label login-item-input">
+          <span class="input-label">Correo electrónico:</span>
+          <input type="email" ng-model="register.email" ng-keyup="validate.email.is_valid = true">
+          <label style="color:red" ng-hide="validate.email.is_valid"><i class="icon ion-ios-information"></i> {{validate.email.message}}</label>
+        </label>
+        <label class="item item-input item-floating-label login-item-input">
+          <span class="input-label">Clave:</span>
+          <input type="password" ng-model="register.password" ng-keyup="validate.password.is_valid = true">
+          <label style="color:red" ng-hide="validate.password.is_valid"><i class="icon ion-ios-information"></i> {{validate.password.message}}</label>
+        </label>
+      </div>
+      <button class="button button-block button-stable icon-left ion-ios-checkmark-empty" ng-click="singup()">
+        Registrarme
+      </button>
+    </ion-content>
+  </div>
+</script>

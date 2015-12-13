@@ -31,8 +31,23 @@ angular.module('200d', ['ionic', '200d.controllers', '200d.services', 'ionic.con
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+  .state('login', {
+    url : '/login',
+    templateUrl : 'templates/login.html',
+    controller : 'LoginCtrl',
+    /*resolve: {
+      // controller will not be loaded until $waitForAuth resolves
+      // Auth refers to our $firebaseAuth wrapper in the example above
+      "currentAuth": ["Auth",
+      function (Auth) {
+        // $waitForAuth returns a promise so the resolve waits for it to complete
+        return Auth.$waitForAuth();
+      }] 
+    }*/
+  })
+
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
@@ -58,7 +73,7 @@ angular.module('200d', ['ionic', '200d.controllers', '200d.services', 'ionic.con
     }
   })
 
-  .state('tab.chats', {
+  /*.state('tab.chats', {
       url: '/chats',
       views: {
         'tab-chats': {
@@ -75,7 +90,7 @@ angular.module('200d', ['ionic', '200d.controllers', '200d.services', 'ionic.con
           controller: 'ChatDetailCtrl'
         }
       }
-    })
+    })*/
 
   .state('tab.account', {
     url: '/account',
@@ -88,6 +103,6 @@ angular.module('200d', ['ionic', '200d.controllers', '200d.services', 'ionic.con
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/asistencia');
+  $urlRouterProvider.otherwise('/login');
 
 });

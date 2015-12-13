@@ -5,8 +5,11 @@
       <img ng-src="{{ institute.shield }}" style="background-color:#f1f1f1;border:6px solid #fff;box-shadow: 0 0 3px #333;" class="padded">
       <h2><i class="icon ion-location"></i> {{institute.title}}</h2>
       <p>1º Grado "A" | {{students.length}} alumnos</p>
-      <button class="button button-block button-energized" ng-click="openModal();">
+      <button class="button button-block button-energized" ng-click="openModal();" ng-if="cards.length > 0">
         <i class="icon ion-android-checkmark-circle"></i> Pasar asistencia
+      </button>
+      <button class="button button-light button-disabled" ng-if="cards.length === 0">
+        Reporte completado
       </button>
     </a>
     
@@ -28,7 +31,7 @@
         <h2>{{student.name}}</h2>
         <p>ID: {{student.idnumber}}</p>
         <div ng-switch="student.present">
-          <i ng-switch-when="null" class="icon ion-android-checkbox-outline-blank"></i>
+          <i ng-switch-when="null" class=""></i>
           <i ng-switch-when="true" style="color:green;" class="icon ion-checkmark-round"></i>
           <i ng-switch-when="false" style="color:red;" class="icon ion-close-round"></i>
         </div>
