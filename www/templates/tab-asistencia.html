@@ -2,9 +2,9 @@
   <ion-content>
 
     <a class="item item-thumbnail-left" href="#" style="background-color:transparent;">
-      <img src="img/escudo-iejms.png">
-      <h2><i class="icon ion-location"></i> Instituto España Jesus Milla Selva</h2>
-      <p>1º grado, Sección "A" 1:00pm</p>
+      <img ng-src="{{ institute.shield }}" style="background-color:#f1f1f1;border:6px solid #fff;box-shadow: 0 0 3px #333;" class="padded">
+      <h2><i class="icon ion-location"></i> {{institute.title}}</h2>
+      <p>1º Grado "A" | {{students.length}} alumnos</p>
       <button class="button button-block button-energized" ng-click="openModal();">
         <i class="icon ion-android-checkmark-circle"></i> Pasar asistencia
       </button>
@@ -15,7 +15,7 @@
         <i class="icon ion-ios-search placeholder-icon"></i>
         <input type="search" placeholder="Buscar alumno(a)" ng-model="searchText">
       </label>
-      <button class="button button-clear">
+      <button class="button button-clear" ng-click="clearSearch();">
         Cancelar
       </button>
     </div>
@@ -27,14 +27,17 @@
         <img ng-src="{{student.face}}">
         <h2>{{student.name}}</h2>
         <p>ID: {{student.idnumber}}</p>
+        <div ng-switch="student.present">
+          <i ng-switch-when="null" class="icon ion-android-checkbox-outline-blank"></i>
+          <i ng-switch-when="true" style="color:green;" class="icon ion-checkmark-round"></i>
+          <i ng-switch-when="false" style="color:red;" class="icon ion-close-round"></i>
+        </div>
 
-        <i class="icon ion-checkmark-round"></i>
-
-        <ion-option-button class="button-assertive" ng-click="uncheck(student)">
-          <i class="icon ion-close-round"></i>
+        <ion-option-button class="button-assertive" ng-click="verifyStudentAsistency(student, false)">
+          <i class="icon ion-close-round"></i>&nbsp;
         </ion-option-button>
-        <ion-option-button class="button-balanced" ng-click="check(student)">
-          <i class="icon ion-checkmark-round"></i>
+        <ion-option-button class="button-balanced" ng-click="verifyStudentAsistency(student, true)">
+          <i class="icon ion-checkmark-round"></i>&nbsp;
         </ion-option-button>
       </ion-item>
     </ion-list>
@@ -59,15 +62,14 @@
       <div class="card" ng-if="cards.length == 0" style="margin-top:100px;background-color:transparent;">
         <div class="item item-text-wrap" style="text-align:center;background-color:rgba(255,255,255,0.6)">
           <p><i class="icon ion-information-circled centered" style="font-size:4em;"></i></p>
-          <p>No hay mas alumnos pendientes por tomar asistencia a clase.</p>
+          <p>La asistencia se ha reportado correctamente!</p>
           <button class="button button-stable button-full" ng-click="closeModal()">Cerrar</button>
         </div>
       </div>
 
       <td-cards>
         <td-card id="td-card" ng-repeat="card in cards" on-destroy="cardDestroyed($index)"
-          on-swipe-left="cardSwipedLeft($index)" on-swipe-right="cardSwipedRight($index)"
-          on-partial-swipe="cardPartialSwipe(amt)">
+          on-swipe-left="cardSwipedLeft(card)" on-swipe-right="cardSwipedRight(card)">
             <div class="title">
                 {{card.name}} | {{card.idnumber}}
             </div>

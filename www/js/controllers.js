@@ -1,24 +1,25 @@
 angular.module('200d.controllers', [])
 
-.controller('AsistenciaCtrl', function($scope, $ionicModal, Students, TDCardDelegate) {
+.controller('AsistenciaCtrl', function($scope, $ionicModal, $log, Students, Institute, TDCardDelegate) {
   $scope.students = Students;
-  var cardTypes = Students;
+  $scope.institute = Institute;
   $scope.cards = [];
+  $scope.searchText = '';
 
-  $scope.addCard = function(i) {
-      var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
-      newCard.id = Math.random();
-      $scope.cards.push(angular.extend({}, newCard));
+  $scope.addCard = function(student) {
+      $scope.cards.push(angular.extend({}, student));
   }
 
-  for(var i = 0; i < 3; i++) $scope.addCard();
+  for(var i = 0; i < $scope.students.length; i++) $scope.addCard($scope.students[i]);
 
-  $scope.cardSwipedLeft = function(index) {
-      console.log('Left swipe');
+  $scope.cardSwipedLeft = function(student) {
+    $scope.verifyStudentAsistency(student, true);
+    console.log('Left swipe');
   }
 
-  $scope.cardSwipedRight = function(index) {
-      console.log('Right swipe');
+  $scope.cardSwipedRight = function(student) {
+    $scope.verifyStudentAsistency(student, false);
+    console.log('Right swipe');
   }
 
   $scope.cardDestroyed = function(index) {
@@ -51,6 +52,15 @@ angular.module('200d.controllers', [])
   $scope.$on('modal.removed', function() {
     // Execute action
   });
+
+  $scope.clearSearch = function(){
+    $log.info('Clearing search');
+    $scope.searchText = undefined;
+  }
+
+  $scope.verifyStudentAsistency = function(student, boool){
+    $scope.students[student.id].present = boool;
+  }
 
 
 })

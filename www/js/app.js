@@ -49,6 +49,9 @@ angular.module('200d', ['ionic', '200d.controllers', '200d.services', 'ionic.con
         resolve: {
           Students : function(StudentsService){
             return StudentsService.all();
+          },
+          Institute : function(InstitueService){
+            return InstitueService.data();
           }
         }
       }

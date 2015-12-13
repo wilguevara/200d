@@ -1,47 +1,76 @@
 angular.module('200d.services', [])
 
+.factory('InstitueService', function() {
+  // Might use a resource here that returns a JSON array
+
+  // Some fake testing data
+  var institute = {
+    id: 1,
+    title: 'Instituto España Jesus Milla Selva',
+    shield: 'img/escudo-iejms.png',
+    code : '0808080808080',
+    location : {
+      lat: '14.0653568',
+      lng: '-87.183411',
+      description : 'Colonia Kennedy, 2 entrada contiguo a iglesia catolica.'
+    }
+
+  };
+
+  return {
+    data: function() {
+      return institute;
+    }
+  };
+})
+
 .factory('StudentsService', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
   var students = [{
     id: 0,
-    name: 'Ben Sparrow',
-    face: 'img/ben.png',
+    name: 'Luis Alonzo Espinoza',
+    face: 'img/luis.jpg',
     inClass : true,
     atSchool : true,
+    present : null,
     idnumber : '0801-1988-15617'
 
   }, {
     id: 1,
-    name: 'Max Lynx',
-    face: 'img/max.png',
+    name: 'Pedro Zelaya',
+    face: 'img/pedro.jpg',
     inClass : null,
     atSchool : null,
+    present : null,
     idnumber : '0101-2004-15617'
 
   }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    face: 'img/adam.jpg',
+    name: 'Marta Cecilia Alvarado',
+    face: 'img/marta.jpg',
     inClass : false,
     atSchool : true,
+    present : null,
     idnumber : '0301-1988-15617'
 
   }, {
     id: 3,
-    name: 'Perry Governor',
-    face: 'img/perry.png',
+    name: 'Jose Ramon Guerrero',
+    face: 'img/jose.jpg',
     inClass : null,
     atSchool : true,
+    present : null,
     idnumber : '1010-2004-15617'
 
   }, {
     id: 4,
-    name: 'Mike Harrington',
-    face: 'img/mike.png',
+    name: 'Carmen Amarilis Lara',
+    face: 'img/carmen.jpg',
     inClass : false,
     atSchool : true,
+    present : null,
     idnumber : '0101-2013-15617'
 
   }];
